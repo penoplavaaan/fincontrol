@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphic/graphic.dart';
-import 'package:untitled/Diagram_data/data.dart';
+import 'package:fincontrol/Diagram_data/data.dart';
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({Key? key}) : super(key: key);
 

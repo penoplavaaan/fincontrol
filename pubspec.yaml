@@ -1,4 +1,4 @@
-name: untitled
+name: fincontrol
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -41,6 +41,8 @@ dependencies:
   graphic: ^0.4.1
   flip_card: ^0.6.0
   qr_flutter: ^4.0.0
+  sqflite: ^2.0.0+4
+  path_provider: any
 
 dev_dependencies:
   flutter_test:

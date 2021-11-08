@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/Companents/flutter_text_field_fab.dart';
+import 'package:fincontrol/Companents/flutter_text_field_fab.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:collection/collection.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -18,54 +21,75 @@ class _MainScreenState extends State<MainScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Padding(padding: EdgeInsets.only(left: 20)),
-            TextFieldFloatingActionButton(
-              'Внести доход...',
-              CupertinoIcons.plus,
-              onChange: (String query) => ({curr_plus = int.parse(query)}),
-              onClear: () => (setState(() {
-                dohod_value += curr_plus;
-              })),
-              iconColor: CupertinoColors.black,
-              backgroundColor: Colors.white,
-              onSubmit: (value) {},
-            )
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Внесите свои расходы и доходы \n Текущий доход: ' + dohod_value.toString() + ' руб.\nТекущий расход: ' + rashod_value.toString() + ' руб.'),
+    return FutureBuilder(
+      future: doSomeQuery(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //return Text('The answer to everything is ${snapshot.data}');
+        if (snapshot.hasData) {
+          return Text('The answer to everything is ${snapshot.data}');
+        } else {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 20)),
+                  TextFieldFloatingActionButton(
+                    'Внести доход...',
+                    CupertinoIcons.plus,
+                    onChange: (String query) => ({curr_plus = int.parse(query)}),
+                    onClear: () => (setState(() {
+                      dohod_value += curr_plus;
+                    })),
+                    iconColor: CupertinoColors.black,
+                    backgroundColor: Colors.white,
+                    onSubmit: (value) {},
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Внесите свои расходы и доходы \n Текущий доход: ' + dohod_value.toString() + ' руб.\nТекущий расход: ' + rashod_value.toString() + ' руб.'),
 
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            const Padding(padding: EdgeInsets.only(right: 20)),
-            TextFieldFloatingActionButton(
-              'Внести расход...',
-              CupertinoIcons.minus,
-              onChange: (String query) => ({curr_minus = int.parse(query)}),
-              onClear: () => (setState(() {
-                rashod_value += curr_minus;
-              })),
-              iconColor: CupertinoColors.black,
-              backgroundColor: Colors.white,
-              onSubmit: (String query) {
-                print(query);
-              },
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Padding(padding: EdgeInsets.only(right: 20)),
+                  TextFieldFloatingActionButton(
+                    'Внести расход...',
+                    CupertinoIcons.minus,
+                    onChange: (String query) => ({curr_minus = int.parse(query)}),
+                    onClear: () => (setState(() {
+                      rashod_value += curr_minus;
+                    })),
+                    iconColor: CupertinoColors.black,
+                    backgroundColor: Colors.white,
+                    onSubmit: (String query) {
+                      print(query);
+                    },
 
-            )
-          ],
-        ),
-      ],
+                  )
+                ],
+              ),
+            ],
+          );
+        }
+      },
     );
+
   }
+
+  Future doSomeQuery() async {
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, "fincontrol.db");
+    return path;
+  }
+
+
 }
+
+
