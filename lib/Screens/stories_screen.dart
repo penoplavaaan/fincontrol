@@ -32,7 +32,7 @@ class Stories_screen extends StatelessWidget {
                     "https://livebook72.ru/img/logo.png",
                     controller: controller,
                     caption: Text(
-                      "Omotuo & Nkatekwan; You will love this meal if taken as supper.",
+                      "LiveBook!.",
                       style: TextStyle(
                         color: Colors.white,
                         backgroundColor: Colors.black54,
