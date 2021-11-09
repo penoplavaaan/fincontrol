@@ -1,3 +1,5 @@
+import 'package:fincontrol/Models/discount_card_model.dart';
+import 'package:fincontrol/Services/db_discount_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fincontrol/Companents/flutter_text_field_fab.dart';
@@ -84,9 +86,12 @@ class _MainScreenState extends State<MainScreen>{
   }
 
   Future doSomeQuery() async {
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, "fincontrol.db");
-    return path;
+    await DB.init("fincontrol_test");
+    DiscountCard model = DiscountCard(id: 1, name: 'name', content: 'content',additionalInfo: 'addInfo');
+    await DB.insert('discount_card', model);
+    List<Map<String, dynamic>> _results = await DB.query(DiscountCard.table);
+
+    return _results;
   }
 
 
