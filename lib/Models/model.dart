@@ -1,5 +1,6 @@
-abstract class Model{
-  int id = 0;
+abstract class Model {
+
+  late int id;
 
   static fromMap() {}
   toMap() {}

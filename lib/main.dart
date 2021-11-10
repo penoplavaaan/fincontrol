@@ -6,8 +6,12 @@ import 'Screens/discount_card.dart';
 import 'Screens/main_screen.dart';
 import 'Screens/statistics_screen.dart';
 import 'Screens/stories_screen.dart';
+import 'Services/db.dart';
 
-void main() => runApp(MyApp());
+void main() async  {
+await DB.init();
+runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

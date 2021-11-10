@@ -1,11 +1,13 @@
-import 'package:fincontrol/Models/discount_card_model.dart';
-import 'package:fincontrol/Services/db_discount_card.dart';
+
+import 'package:fincontrol/Models/card_model.dart';
+import 'package:fincontrol/Services/db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fincontrol/Companents/flutter_text_field_fab.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:collection/collection.dart';
+import 'package:fincontrol/Models/model.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -86,12 +88,15 @@ class _MainScreenState extends State<MainScreen>{
   }
 
   Future doSomeQuery() async {
-    await DB.init("fincontrol_test");
-    DiscountCard model = DiscountCard(id: 1, name: 'name', content: 'content',additionalInfo: 'addInfo');
-    await DB.insert('discount_card', model);
-    List<Map<String, dynamic>> _results = await DB.query(DiscountCard.table);
+    print("222");
+    Cards card = Cards(id: 1, content: "adc",additionalInfo: "drr");
+    print("333");
+    await DB.insert('cards', card);
+    print("4");
+    var result =  await DB.query('cards');
+    print('yes');
+    result.forEach((row) => print(row));
 
-    return _results;
   }
 
 
