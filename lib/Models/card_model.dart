@@ -2,33 +2,42 @@ import 'dart:convert';
 import 'package:fincontrol/Models/model.dart';
 
 
-class Cards extends Model {
+class DiscountCard implements Model {
 
   static String table = 'todo_items';
 
   int id;
-  String content;
-  String additionalInfo;
+  String sideOneName;
+  String sideOneAdditionalInfo;
+  String sideTwoData;
+  String sideTwoAdditionalInfo;
 
-  Cards({ required this.id, required this.content, required this.additionalInfo });
+  DiscountCard({ required this.id, required this.sideOneName, required this.sideOneAdditionalInfo, required this.sideTwoData, required this.sideTwoAdditionalInfo });
 
+  @override
   Map<String, dynamic> toMap() {
 
     Map<String, dynamic> map = {
       'id': id,
-      'content': content,
-      'additionalInfo': additionalInfo
+      'sideOneName': sideOneName,
+      'sideOneAdditionalInfo': sideOneAdditionalInfo,
+      'sideTwoData': sideTwoData,
+      'sideTwoAdditionalInfo': sideTwoAdditionalInfo
     };
 
     return map;
   }
 
-  static Cards fromMap(Map<String, dynamic> map) {
+  static DiscountCard fromMap(Map<String, dynamic> map) {
 
-    return Cards(
+    return DiscountCard(
         id: map['id'],
-        content: map['content'],
-        additionalInfo: map['additionalInfo']
+        sideOneName: map['sideOneName'],
+        sideOneAdditionalInfo: map['sideOneAdditionalInfo'],
+        sideTwoData: map['sideTwoData'],
+        sideTwoAdditionalInfo: map['sideTwoAdditionalInfo']
     );
   }
+
+
 }

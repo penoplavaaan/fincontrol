@@ -5,9 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fincontrol/Companents/flutter_text_field_fab.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
-import 'package:collection/collection.dart';
-import 'package:fincontrol/Models/model.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -88,14 +85,22 @@ class _MainScreenState extends State<MainScreen>{
   }
 
   Future doSomeQuery() async {
-    print("222");
-    Cards card = Cards(id: 1, content: "adc",additionalInfo: "drr");
-    print("333");
-    await DB.insert('cards', card);
-    print("4");
-    var result =  await DB.query('cards');
-    print('yes');
-    result.forEach((row) => print(row));
+    /*
+    String dbName = 'prodFincontrol';
+    String tableName = 'cards';
+    String onCreateString = 'CREATE TABLE IF NOT EXISTS $tableName (id INTEGER PRIMARY KEY NOT NULL, content STRING, additionalInfo STRING)';
+
+    Database db = await openDatabase(await getDatabasesPath()+dbName);
+    await db.execute(onCreateString);
+    DB dbCardManipulator = DB(db, dbName, tableName, onCreateString);
+
+    DiscountCard card3 = DiscountCard(id: 3,content: "f", additionalInfo: "j");
+    dbCardManipulator.insert(card3);
+    dbCardManipulator.delete(card3);
+    var result = await dbCardManipulator.query(3);
+    return result;
+
+     */
 
   }
 

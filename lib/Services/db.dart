@@ -5,31 +5,48 @@ import 'package:sqflite/sqflite.dart';
 import 'package:fincontrol/Models/model.dart';
 import 'dart:convert';
 
-abstract class DB {
 
-  static Database? _db;
-  Future<Database> get database async =>
-      _db ??= await init();
+class DB{
 
-  static int get _version => 1;
+  Database _db;
+  String _dbName;
+  String _tableName;
+  String _onCreateString;
 
-  static Future<Database> init() async {
-    String _path = await getDatabasesPath() + 'testfincontrol';
-    return  await openDatabase(_path, version: _version, onCreate: onCreate);
+  DB(
+      this._db,
+      this._dbName,
+      this._tableName,
+      this._onCreateString
+      );
+
+  Future<Database> init() async {
+    String _path = await getDatabasesPath() + _dbName;
+    return  await openDatabase(_path, onCreate: onCreate);
   }
 
-  static void onCreate(Database db, int version) async =>
-      await db.execute('CREATE TABLE cards (id INTEGER PRIMARY KEY NOT NULL, content STRING, additionalInfo STRING)');
+  void onCreate(Database _db, int version) async =>
+      await _db.execute(_onCreateString);
 
-  static Future<List<Map<String, dynamic>>> query(String table) async => _db!.query(table);
+  Future<List<Map<String, dynamic>>> query(int id) async => await _db.query(_tableName, where: 'id=?',whereArgs: [id]);
 
-  static Future<int> insert(String table, Model model) async =>
-      await _db!.insert(table, model.toMap());
+  Future<List<Map<String, dynamic>>> queryAll() async => await _db.query(_tableName);
 
-  static Future<int> update(String table, Model model) async =>
-      await _db!.update(table, model.toMap(), where: 'id = ?', whereArgs: [model.id]);
+  Future<int> insert(Model model) async {
+    try{
+      await _db.insert(_tableName, model.toMap());
+    }
+    catch(DatabaseException){
+      print('Попытка добавить неуникальное значение!');
+    }
+    return 0;
+  }
 
-  static Future<int> delete(String table, Model model) async =>
-      await _db!.delete(table, where: 'id = ?', whereArgs: [model.id]);
+
+  Future<int> update(Model model) async =>
+      await _db.update(_tableName, model.toMap(), where: 'id = ?', whereArgs: [model.id]);
+
+  Future<int> delete(Model model) async =>
+      await _db.delete(_tableName, where: 'id = ?', whereArgs: [model.id]);
 
 }

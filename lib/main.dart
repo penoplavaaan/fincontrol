@@ -9,7 +9,7 @@ import 'Screens/stories_screen.dart';
 import 'Services/db.dart';
 
 void main() async  {
-await DB.init();
+//await DB.init();
 runApp(MyApp());
 }
 
